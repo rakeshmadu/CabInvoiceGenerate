@@ -1,5 +1,6 @@
 package com.cab.test;
 
+import com.cab.entities.Invoice;
 import com.cab.entities.Ride;
 import com.cab.services.InvoiceGenerator;
 import org.junit.Before;
@@ -9,31 +10,33 @@ import static org.junit.Assert.assertEquals;
 
 public class InvoiceTest {
 
-	InvoiceGenerator invoice;
+	InvoiceGenerator invoiceGenerator;
 
 	@Before
 	public void initialization() {
-		invoice = new InvoiceGenerator();
+		invoiceGenerator = new InvoiceGenerator();
 	}
 
 	@Test
 	public void testGenerateInvoice() {
 
-		assertEquals(103, invoice.generateInvoice(new Ride(10, 3)), 0.0);
+		assertEquals(103, invoiceGenerator.generateInvoice(new Ride(10, 3)), 0.0);
 	}
 
 	@Test
 	public void testGenerateInvoice_getMin() {
 
-		assertEquals(5, invoice.generateInvoice(new Ride(0.1, 1)), 0.0);
+		assertEquals(5, invoiceGenerator.generateInvoice(new Ride(0.1, 1)), 0.0);
 	}
 
 	@Test
 	public void testGenerateInvoice_multipleRides() {
 
 		Ride [] rides = {new Ride(0.1, 2), new Ride(10, 3)};
+		Invoice invoice = new Invoice(2, 108, 54);
 
-		assertEquals(108, invoice.generateInvoice(rides), 0.0);
+		assertEquals(invoice, invoiceGenerator.generateInvoice(rides));
 	}
+
 
 }
