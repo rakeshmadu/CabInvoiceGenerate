@@ -1,13 +1,15 @@
-
 package com.cab.services;
 
 import com.cab.entities.Invoice;
 import com.cab.entities.Ride;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class InvoiceGenerator {
 
 	public double generateInvoice(Ride ride) {
-		double fare = 10*ride.distance + ride.time;
+		double fare = 10 * ride.distance + ride.time;
 
 		return fare > 5 ? fare : 5;
 	}
@@ -16,12 +18,21 @@ public class InvoiceGenerator {
 		double singleFare;
 		double totalFare = 0;
 		for (Ride ride : rides) {
-			singleFare = 10*ride.distance + ride.time;
+			singleFare = 10 * ride.distance + ride.time;
 			totalFare += singleFare > 5 ? singleFare : 5;
 		}
 
 		return new Invoice(rides.length, totalFare, totalFare / rides.length);
 	}
 
+	public Invoice generateInvoice(int i, HashMap<Integer, Ride[]> rideRepo) {
+
+		for (Map.Entry<Integer, Ride[]> rideEntry : rideRepo.entrySet()) {
+			if (rideEntry.getKey() == i)
+				return generateInvoice(rideEntry.getValue());
+		}
+
+		return null;
+	}
 
 }
